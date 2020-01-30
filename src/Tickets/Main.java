@@ -47,10 +47,12 @@ public class Main
 			catch (FileNotFoundException ex) //from getSeatingChart()
 			{
 				out.println("Seating chart could not be found.\nPlease check that the file is named \"A1.txt\" and located in the proper directory.");
+				quit = true;
 			}
 			catch (NoSuchElementException ex)
 			{
 				out.println("Element could not be found.");
+				quit = true;
 			}
 		}
 		userInput.close();

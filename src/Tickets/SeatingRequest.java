@@ -213,35 +213,37 @@ public class SeatingRequest
 				
 				boolean firstTimeThrough = (movementIterator == 1);
 				boolean exceptionCase = (movementIterator == 1 && rowParity == ODD && requestParity == EVEN); //When the row has an odd number of seats and the user requests an even number of seats then the starting seat should "move" right first to make sure all spaces are covered before going out of bounds on the high end of the row (towards 'Z')
-				if (!currentSeatsAreAvailable && (!firstTimeThrough || exceptionCase))//don't execute the following code if seats are available, or its the first time through the loop UNLESS the row has an odd number of seats AND the request an even number of seats
+				if (!currentSeatsAreAvailable)
 				{
-					newSeat = (char)((int)newSeat - movementIterator);
-					
-					//check to see if all possibilities for the starting seat have been scanned (step out left (before 'A"))
-					if((int)newSeat < ASCII_A)
+					if(!(firstTimeThrough && exceptionCase))//don't execute the following code if seats are available, or its the first time through the loop UNLESS the row has an odd number of seats AND the request an even number of seats
 					{
-						//all of the seats have been scanned skip to end
-						noSeatsAreAvailable = true;
-					}
-					else
-					{
-						//create a new request with a different starting seat to the left
-						SeatingRequest newRequestLeft = new SeatingRequest(auditorium, this, newRow, newSeat); 
-						if(newRequestLeft.valid())
+						newSeat = (char)((int)newSeat - movementIterator);
+						
+						//check to see if all possibilities for the starting seat have been scanned (step out left (before 'A"))
+						if((int)newSeat < ASCII_A)
 						{
-							//new seating request is valid
-							currentSeatsAreAvailable = true;
-							
-							//would you like to reserve the best available seats?
-							reserveBestAvailable(userInput, newRequestLeft); //TODO make all reserve functions tell the user what seats they got
+							//all of the seats have been scanned skip to end
+							noSeatsAreAvailable = true;
 						}
 						else
 						{
-							//new seating request is not valid
-							movementIterator++;
+							//create a new request with a different starting seat to the left
+							SeatingRequest newRequestLeft = new SeatingRequest(auditorium, this, newRow, newSeat); 
+							if(newRequestLeft.valid())
+							{
+								//new seating request is valid
+								currentSeatsAreAvailable = true;
+								
+								//would you like to reserve the best available seats?
+								reserveBestAvailable(userInput, newRequestLeft); //TODO make all reserve functions tell the user what seats they got
+							}
+							else
+							{
+								//new seating request is not valid
+								movementIterator++;
+							}
 						}
 					}
-					
 				}
 			}
 		} 
@@ -281,7 +283,7 @@ public class SeatingRequest
 		boolean inputValid = false;
 		do
 		{
-			out.println("The best  seats available in the selected row are " + Integer.toString(preferredRow) + Character.toString(preferredStartingSeat) + " through " + Integer.toString(preferredRow) + Character.toString((char)((int)preferredStartingSeat + totalNumberOfSeatsRequested - 1)) + ".");
+			out.println("The best  seats available in the selected row are " + Integer.toString(newRequest.preferredRow) + Character.toString(newRequest.preferredStartingSeat) + " through " + Integer.toString(preferredRow) + Character.toString((char)((int)preferredStartingSeat + totalNumberOfSeatsRequested - 1)) + ".");
 			out.println("Reserve alternate seats? (Y/N)?");
 			char userChoice = Character.toUpperCase(userInput.next().charAt(0));
 		if (userChoice == 'Y')
