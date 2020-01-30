@@ -304,11 +304,14 @@ public class SeatingRequest
 	//display price
 	public void displayPrice()
 	{
-		float price = (numberOfAdultTickets * ADULT_PRICE + numberOfChildTickets * CHILD_PRICE + numberOfSeniorTickets * SENIOR_PRICE);
-		out.print("Thank you! That will be $");
-		out.printf("%.2f", price);
-		out.println('.');
-		out.println("You have seats " + Integer.toString(preferredRow) + Character.toString(preferredStartingSeat) + " through " + Integer.toString(preferredRow) + Character.toString((char)((int)preferredStartingSeat + totalNumberOfSeatsRequested - 1)) + ".");
+		if (totalNumberOfSeatsRequested != 0)
+		{
+			float price = (numberOfAdultTickets * ADULT_PRICE + numberOfChildTickets * CHILD_PRICE + numberOfSeniorTickets * SENIOR_PRICE);
+			out.print("Thank you! That will be $");
+			out.printf("%.2f", price);
+			out.println('.');
+			out.println("You have seats " + Integer.toString(preferredRow) + Character.toString(preferredStartingSeat) + " through " + Integer.toString(preferredRow) + Character.toString((char)((int)preferredStartingSeat + totalNumberOfSeatsRequested - 1)) + ".");
+		}
 	}
 	
 	//setters
