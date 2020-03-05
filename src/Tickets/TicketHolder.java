@@ -42,7 +42,7 @@ public class TicketHolder
 	}
 	public int seniorTickets(int seniorTickets)
 	{
-		adult = seniorTickets;
+		senior = seniorTickets;
 		return seniorTickets;
 	}
 }

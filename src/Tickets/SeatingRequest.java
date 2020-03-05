@@ -21,7 +21,7 @@ public class SeatingRequest
 	private static final int ASCII_A = 65;
 	private Theater auditorium = null;
 	private static final float ADULT_PRICE = 10f, CHILD_PRICE = 5f, SENIOR_PRICE = 7.50f;
-	private static boolean ODD = true, EVEN = false;
+	private static final boolean ODD = true, EVEN = false;
 	
 	//constructors
  	SeatingRequest(Theater theater, Scanner userInput) //sets all of the class variables
@@ -134,7 +134,7 @@ public class SeatingRequest
 		}
 		writer.println(); //move to next line
 		
-		for (int currentRow = 0; currentRow < auditorium.getRows(); currentRow++) //print each row
+		for (int currentRow = 1; currentRow <= auditorium.getRows(); currentRow++) //print each row
 		{
 			//print the number and spaces at left of the row
 			for (int space = 1; space <= numberOfDigitsInMaxRowNumber - Integer.toString(currentRow).length() - 1; space++) //should print the correct number of spaces for the row before the number so that all the columns are correctly aligned
@@ -148,7 +148,7 @@ public class SeatingRequest
 			//print the actual seats for the row
 			for (int currentSeat = 0; currentSeat < auditorium.getSeatsPerRow(); currentSeat++)
 			{
-				writer.print(seatingChart[currentRow][currentSeat]);
+				writer.print(seatingChart[currentRow - 1][currentSeat]); //converts current row to index
 			}
 			
 			//print new line character
